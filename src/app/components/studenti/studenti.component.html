@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Citta</th>
+        <th scope="col">Via</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Corso Laurea</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of studenti">
+        <td>{{p.nome}}</td>
+        <td>{{p.citta}}</td>
+        <td>{{p.via}}</td>
+        <td>{{p.telefono}}</td>
+        <td>{{p.idCorsoLaurea.nome}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

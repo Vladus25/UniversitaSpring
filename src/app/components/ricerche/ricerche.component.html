@@ -1,0 +1,64 @@
+<select [(ngModel)]="selectedOption">
+  <option value="">Seleziona un'opzione di Ricerca</option>
+  <option *ngFor="let block of blocks" [value]="block.value">{{ block.label }}</option>
+</select>
+
+<div [ngSwitch]="selectedOption">
+  <div *ngSwitchCase="'1'">
+    <div class="container">
+      <h2>Ricerca Esame</h2>
+
+      <form (ngSubmit)="ricercaEsame()">
+        <div class="form-group">
+          <label for="matricola">Matricola:</label>
+          <input type="number" class="form-control" id="matricola" [(ngModel)]="matricola" name="matricola" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cerca</button>
+      </form>
+
+      <div class="mt-4" *ngIf="datiEsame">
+        <h4>Risultato:</h4>
+        <div *ngFor="let esame of datiEsame">
+          <div class="card mb-2">
+            <div class="card-body">
+              <h5 class="card-title">Nome studente: {{ esame }}</h5>
+              <p class="card-text">Data esame: {{ esame }}</p>
+              <p class="card-text">Voto: {{ esame }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngSwitchCase="'2'">
+    <div>
+
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'3'">
+    <div>
+
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'4'">
+    <div>
+
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'5'">
+    <div>
+
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'6'">
+    <div>
+
+    </div>
+  </div>
+
+</div>

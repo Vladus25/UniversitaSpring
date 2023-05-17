@@ -19,4 +19,25 @@ export class ConnectionDBService {
     return this.http.get<any>(`${this.baseUrl}/esame/query1?matricola=${matricola}`);
   }
 
+  query2(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/esame/query2`);
+  }
+
+  query3(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/esame/query3?id=${id}`);
+  }
+
+  query4(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/esame/query4`);
+  }
+
+  query5(matricola: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/esame/query5?matricola=${matricola}`);
+  }
+
+  query6(matricola: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/esame/query6?matricola=${matricola}`);
+  }
+
+
 }

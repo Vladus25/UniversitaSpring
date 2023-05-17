@@ -1,64 +1,144 @@
-<select [(ngModel)]="selectedOption">
-  <option value="">Seleziona un'opzione di Ricerca</option>
-  <option *ngFor="let block of blocks" [value]="block.value">{{ block.label }}</option>
-</select>
+<div class="container">
+  <h2>Ricerca Esame</h2>
 
-<div [ngSwitch]="selectedOption">
-  <div *ngSwitchCase="'1'">
-    <div class="container">
-      <h2>Ricerca Esame</h2>
+  <div class="mb-3">
+    <label for="selectOption" class="form-label">Seleziona un'opzione di Ricerca</label>
+    <select class="form-select" id="selectOption" [(ngModel)]="selectedOption" name="selectOption">
+      <option *ngFor="let block of blocks" [value]="block.value">{{ block.label }}</option>
+    </select>
+  </div>
 
+
+  <div [ngSwitch]="selectedOption">
+
+    <!-- Dato uno studente si vuole ottenere l'elenco degli esami sostenuti con data e voto -->
+    <div *ngSwitchCase="'1'">
       <form (ngSubmit)="ricercaEsame()">
-        <div class="form-group">
-          <label for="matricola">Matricola:</label>
+        <div class="mb-3">
+          <label for="matricola" class="form-label">Matricola:</label>
           <input type="number" class="form-control" id="matricola" [(ngModel)]="matricola" name="matricola" required>
         </div>
         <button type="submit" class="btn btn-primary">Cerca</button>
-      </form>
 
-      <div class="mt-4" *ngIf="datiEsame">
+        <div class="mt-4" *ngIf="datiEsame">
+          <h4>Risultato:</h4>
+          <div *ngFor="let esame of datiEsame">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Studente: {{ esame[0] }}</h5>
+                <h5 class="card-title">Data esame: {{ esame[1]}}</h5>
+                <h5 class="card-title">Voto: {{ esame[2] }}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Restituisce la lista dei corsi di laurea con numero rispettivo di iscritti -->
+    <div *ngSwitchCase="'2'">
+      <div class="mt-4" *ngIf="datiCorsiLaurea">
         <h4>Risultato:</h4>
-        <div *ngFor="let esame of datiEsame">
-          <div class="card mb-2">
+        <div *ngFor="let corso of datiCorsiLaurea">
+          <div class="card mb-3">
             <div class="card-body">
-              <h5 class="card-title">Nome studente: {{ esame }}</h5>
-              <p class="card-text">Data esame: {{ esame }}</p>
-              <p class="card-text">Voto: {{ esame }}</p>
+              <h5 class="card-title">Corso-Laurea: {{ corso[0] }}</h5>
+              <h5 class="card-title">Numero Studenti: {{ corso[1]}}</h5>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-  </div>
-  <div *ngSwitchCase="'2'">
-    <div>
+    <!-- Dato un corso di laurea visualizzare l'offerta formativa ossia il tipo di corsi che prevede -->
+    <div *ngSwitchCase="'3'">
+      <form (ngSubmit)=" ricercaTipoCorsi()">
+        <div class="mb-3">
+          <label for="id" class="form-label">id:</label>
+          <input type="number" class="form-control" id="id" [(ngModel)]="id" name="id" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cerca</button>
 
+        <div class="mt-4" *ngIf="datiTipoCorsi">
+          <h4>Risultato:</h4>
+          <div *ngFor="let dati of datiTipoCorsi">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Corso: {{ dati[0] }}</h5>
+                <h5 class="card-title">Semestre: {{ dati[1]}}</h5>
+                <h5 class="card-title">Corso Laure: {{ dati[2] }}</h5>
+                <h5 class="card-title">Professore: {{ dati[3] }} {{ dati[4] }}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Dato un corso restituire informazioni sullo stesso, sul tutor e sul professore -->
+    <div *ngSwitchCase="'4'">
+      <div class="mt-4" *ngIf="datiCorsiProfTutor">
+        <h4>Risultato:</h4>
+        <div *ngFor="let dati of datiCorsiProfTutor">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Corso: {{ dati[0] }}</h5>
+              <h5 class="card-title">Semestre: {{ dati[1]}}</h5>
+              <h5 class="card-title">Professore: {{ dati[2] }} {{ dati[3] }}</h5>
+              <h5 class="card-title">Tutor: {{ dati[4] }}</h5>
+              <h5 class="card-title">Orario: {{ dati[5] }}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dato uno studente restituire la lista di corsi seguiti  -->
+    <div *ngSwitchCase="'5'">
+      <form (ngSubmit)="ricercaStudenteCorso()">
+        <div class="mb-3">
+          <label for="matricola" class="form-label">Matricola:</label>
+          <input type="number" class="form-control" id="matricola" [(ngModel)]="matricola" name="matricola" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cerca</button>
+
+        <div class="mt-4" *ngIf="datiStudenteCorsi">
+          <h4>Risultato:</h4>
+          <div *ngFor="let dati of datiStudenteCorsi">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Corso: {{ dati[0] }}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- data la matricola visualizzare informazioni sul corso di laurea ed elenco di esami sostenuti con info sul professore che ha tenuto ogni corso -->
+    <div *ngSwitchCase="'6'">
+      <form (ngSubmit)="ricercaCorsoEsameProf()">
+        <div class="mb-3">
+          <label for="matricola" class="form-label">Matricola:</label>
+          <input type="number" class="form-control" id="matricola" [(ngModel)]="matricola" name="matricola" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Cerca</button>
+
+        <div class="mt-4" *ngIf="datiCorsoEsameProf">
+          <h4>Risultato:</h4>
+          <div *ngFor="let dati of datiCorsoEsameProf">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Corso: {{ dati[0] }}</h5>
+                <h5 class="card-title">Corso Laurea: {{ dati[1]}}</h5>
+                <h5 class="card-title">Data: {{ dati[2] }}</h5>
+                <h5 class="card-title">Voto: {{ dati[3] }}</h5>
+                <h5 class="card-title">Professore: {{ dati[4] }} {{ dati[5] }}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-
-  <div *ngSwitchCase="'3'">
-    <div>
-
-    </div>
-  </div>
-
-  <div *ngSwitchCase="'4'">
-    <div>
-
-    </div>
-  </div>
-
-  <div *ngSwitchCase="'5'">
-    <div>
-
-    </div>
-  </div>
-
-  <div *ngSwitchCase="'6'">
-    <div>
-
-    </div>
-  </div>
-
 </div>

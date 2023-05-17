@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="mt-4">
   <table class="table">
     <thead>
       <tr>
@@ -11,13 +11,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let p of studenti">
-        <td>{{p.nome}}</td>
-        <td>{{p.citta}}</td>
-        <td>{{p.via}}</td>
-        <td>{{p.telefono}}</td>
-        <td>{{p.idCorsoLaurea.nome}}</td>
+        <td>{{ p.nome }}</td>
+        <td>{{ p.citta }}</td>
+        <td>{{ p.via }}</td>
+        <td>{{ p.telefono }}</td>
+        <td>{{ p.idCorsoLaurea.nome }}</td>
       </tr>
     </tbody>
   </table>
 </div>
-
